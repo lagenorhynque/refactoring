@@ -63,6 +63,12 @@ const invoices = [
   }
 ];
 
+module.exports = {
+  statement,
+  plays,
+  invoices
+};
+
 function main() {
   for (const invoice of invoices) {
     console.log(statement(invoice, plays));
