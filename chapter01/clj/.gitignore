@@ -1,0 +1,18 @@
+### https://raw.github.com/github/gitignore/c68eb91e0a72ca1efba128c33de9caea41281f19/Clojure.gitignore
+
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/lib/
+/classes/
+/target/
+/checkouts/
+.lein-deps-sum
+.lein-repl-history
+.lein-plugins/
+.lein-failures
+.nrepl-port
+.cpcache/
+
+
