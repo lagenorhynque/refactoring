@@ -1,4 +1,8 @@
 function statement(invoice, plays) {
+  return renderPlainText(invoice, plays);
+}
+
+function renderPlainText(invoice, plays) {
   function playFor(aPerformance) {
     return plays[aPerformance.playID];
   }
