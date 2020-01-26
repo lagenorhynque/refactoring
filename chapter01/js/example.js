@@ -2,19 +2,6 @@ function statement(invoice, plays) {
   function playFor(aPerformance) {
     return plays[aPerformance.playID];
   }
-  function enrichPerformance(aPerformance) {
-    const result = Object.assign({}, aPerformance);
-    result.play = playFor(result);
-    return result;
-  }
-
-  const statementData = {};
-  statementData.customer = invoice.customer;
-  statementData.performances = invoice.performances.map(enrichPerformance);
-  return renderPlainText(statementData, plays);
-}
-
-function renderPlainText(data, plays) {
   function amountFor(aPerformance) {
     let result = 0;
     switch (aPerformance.play.type) {
@@ -36,6 +23,20 @@ function renderPlainText(data, plays) {
     }
     return result;
   }
+  function enrichPerformance(aPerformance) {
+    const result = Object.assign({}, aPerformance);
+    result.play = playFor(result);
+    result.amount = amountFor(result);
+    return result;
+  }
+
+  const statementData = {};
+  statementData.customer = invoice.customer;
+  statementData.performances = invoice.performances.map(enrichPerformance);
+  return renderPlainText(statementData, plays);
+}
+
+function renderPlainText(data, plays) {
   function volumeCreditsFor(aPerformance) {
     let result = 0;
     // ボリューム特典のポイントを加算
@@ -62,7 +63,7 @@ function renderPlainText(data, plays) {
   function totalAmount() {
     let result = 0;
     for (let perf of data.performances) {
-      result += amountFor(perf);
+      result += perf.amount;
     }
     return result;
   }
@@ -70,7 +71,7 @@ function renderPlainText(data, plays) {
   let result = `Statement for ${data.customer}\n`;
   for (let perf of data.performances) {
     // 注文の内訳を出力
-    result += `  ${perf.play.name}: ${usd(amountFor(perf))} (${
+    result += `  ${perf.play.name}: ${usd(perf.amount)} (${
       perf.audience
     } seats)\n`;
   }
