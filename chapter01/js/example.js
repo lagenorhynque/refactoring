@@ -1,6 +1,10 @@
 function statement(invoice, plays) {
+  function playFor(aPerformance) {
+    return plays[aPerformance.playID];
+  }
   function enrichPerformance(aPerformance) {
     const result = Object.assign({}, aPerformance);
+    result.play = playFor(result);
     return result;
   }
 
